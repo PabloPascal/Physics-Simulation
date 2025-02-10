@@ -1,40 +1,43 @@
-#include "vec.h"
+#include "../headers/vec.h"
 
+vec2::vec2() {
+	vector.x = 0;
+	vector.y = 0;
+}
 
-
-vec::vec(float x, float y) {
+vec2::vec2(float x, float y) {
 	vector.x = x;
 	vector.y = y;
 }
 
 
-vec::vec(sf::Vector2f v) {
+vec2::vec2(sf::Vector2f v) {
 	vector = v;
 }
 
 
-vec vec::operator+(vec v) { return vec(vector + v.vector); }
-vec vec::operator-(vec v) { return vec(vector - v.vector); }
-vec vec::operator/(float scalar) { return vec(vector.x / scalar, vector.y / scalar); }
-vec vec::operator*(float scalar) { return vec(scalar * vector.x, scalar * vector.y); }
+vec2 vec2::operator+(vec2 v) { return vec2(vector + v.vector); }
+vec2 vec2::operator-(vec2 v) { return vec2(vector - v.vector); }
+vec2 vec2::operator/(float scalar) { return vec2(vector.x / scalar, vector.y / scalar); }
+vec2 vec2::operator*(float scalar) { return vec2(scalar * vector.x, scalar * vector.y); }
 
 
-vec& vec::operator=(vec v) {
+vec2& vec2::operator=(vec2 v) {
 	vector = v.vector;
 	return *this;
 }
 
 
-const sf::Vector2f vec::get() const
+const sf::Vector2f vec2::get() const
 {
 	return vector;
 }
 
 
 
-float dotProd(vec v1, vec v2) {
+float dotProd(vec2 v1, vec2 v2) {
 	return v1.get().x * v2.get().x + v1.get().y * v2.get().y;
 }
 
 
-float length(const vec& vector) { return sqrt(vector.get().x * vector.get().x + vector.get().y * vector.get().y); }
+float length(const vec2& vector) { return sqrt(vector.get().x * vector.get().x + vector.get().y * vector.get().y); }

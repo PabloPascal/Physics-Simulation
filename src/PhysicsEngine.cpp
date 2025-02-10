@@ -1,92 +1,162 @@
-#include "PhysicsEngine.h"
+#include "../headers/PhysicsEngine.h"
 
 
 
-bool detectCollision(Circle& circle1, Circle& circle2) {
-	float r1 = circle1.getSprite().getRadius();
-	float r2 = circle2.getSprite().getRadius();
-
-	vec vec_centr = circle1.getCenter() - circle2.getCenter();
-	float length_centr = length(vec_centr);
+Physics* Physics::instance_engine = nullptr;
 
 
-	if (length_centr <= r1 + r2) {
+Physics* Physics::getInstance(float gravity) {
+	
+	if (instance_engine == nullptr) {
+		instance_engine = new Physics;
+		instance_engine->m_gravity = gravity;
+		instance_engine->m_window.create(sf::VideoMode(ScreenWidth, ScreenHeight), "Simulation");
+	}
+
+	return instance_engine;
+
+}
+
+
+void Physics::run() {
+
+
+	sf::Clock clock;
+
+
+	while (m_window.isOpen()) {
+
+		sf::Time time = clock.restart();
+		float dt = time.asSeconds();
+
+
+		sf::Event event;
+		while (m_window.pollEvent(event)) { //main cycle
+
+			if (event.type == sf::Event::Closed) {
+				m_window.close();
+				}
+			}
+			//phsycis
+
+			collision();
+			
+			gravityUpdate(dt);
+
+			for (size_t i = 0; i < circles.size(); i++) {
+				circles[i]->update(dt);
+			}
+
+			//draw
+
+			m_window.clear();
+
+			render();
+
+			m_window.display();
+		
+
+	}
+
+}
+
+void crashBalls(Circle& circle1, Circle& circle2) {
+	vec2 x1 = circle1.getPosition();
+	vec2 x2 = circle2.getPosition();
+
+	vec2 v1 = circle1.getVelocity();
+	vec2 v2 = circle2.getVelocity();
+
+	float m1 = circle1.getMass();
+	float m2 = circle2.getMass();
+
+	vec2 v1_new = v1 - (x1 - x2) * (2 * m2 / (m1 + m2) * dotProd(v1 - v2, x1 - x2) / (length(x1 - x2) * length(x1 - x2)));
+	vec2 v2_new = v2 - (x2 - x1) * (2 * m1 / (m1 + m2) * dotProd(v2 - v1, x2 - x1) / (length(x2 - x1) * length(x2 - x1)));
+
+	circle1.setVelocity(v1_new.get());
+	circle2.setVelocity(v2_new.get());
+}
+
+#include <iostream>
+bool checkBallsCollision(const Circle& c1,const Circle& c2)
+{
+	float r1 = c1.getRadius();
+	float r2 = c2.getRadius();
+	
+
+	if (length(c1.getPosition() - c2.getPosition()) < r1 + r2) {
+		//std::cout << "intersect! \n";
 		return true;
 	}
-	else {
-		return false;
-	}
 
+	return false;
 }
 
 
-void ObjCollision(Circle& circle1, Circle& circle2) {
 
-	if (detectCollision(circle1, circle2)) {
+void Physics::collision()
+{
 
-		vec x1 = circle1.getCenter();
-		vec x2 = circle2.getCenter();
+	for (size_t i = 0; i < circles.size(); i++) {
 
-		vec v1 = circle1.m_speed;
-		vec v2 = circle2.m_speed;
+		for (size_t j = i+1; j < circles.size(); j++) {
 
-		float m1 = circle1.m_mass;
-		float m2 = circle2.m_mass;
+			if (circles[i]->getCollisionIndicate() && circles[j]->getCollisionIndicate() && 
+				checkBallsCollision(*circles[i], *circles[j]))
+			{
+				crashBalls(*circles[i], *circles[j]);
+			}
 
-		vec v1_new = v1 - (x1 - x2) * (2 * m2 / (m1 + m2) * dotProd(v1 - v2, x1 - x2) / (length(x1 - x2) * length(x1 - x2)));
-		vec v2_new = v2 - (x2 - x1) * (2 * m1 / (m1 + m2) * dotProd(v2 - v1, x2 - x1) / (length(x2 - x1) * length(x2 - x1)));
-		
-		circle1.setVelocity(v1_new.get());
-		circle2.setVelocity(v2_new.get());
-
+		}
 
 	}
-}
 
-
-void gravityCollision(Circle& circle, float dt) {
-	float gravity = 1000;
-	float y = circle.getCenter().y;
-	float x = circle.getCenter().x;
-	float vy = circle.m_speed.y;
-	vy += gravity * dt;
-	circle.setVelocity({ circle.m_speed.x, vy });
-
-	if (y >= ScreenHeight) {
-		vy *= -0.9;
-		circle.setVelocity({ circle.m_speed.x, vy });
-		std::cout << vy << std::endl;
-	}
-
-	y += vy * dt;
-	x += circle.m_speed.x * dt;
-
-	circle.setPosition({ x, y });
-}
-
-
-void collisionWalls(Circle& circle) {
-
-	float r = circle.getRadius();
-	if (circle.getCenter().x + r > ScreenWidth || circle.getCenter().x - r < 0) {
-		circle.setVelocity({ -circle.getSpeed().x, circle.getSpeed().y });
-	}
-
-	if (circle.getCenter().y + r > ScreenHeight || circle.getCenter().y - r < 0) {
-		circle.setVelocity({ circle.getSpeed().x, -circle.getSpeed().y });
-	}
 
 }
 
 
 
-void move(Circle& circle,float dt) {
+void Physics::render() {
 
-	float x = circle.getCenter().x;
-	float y = circle.getCenter().y;
+	for (size_t i = 0; i < circles.size(); i++)
+	{
+		circles[i]->draw(m_window);
+	}
 
-	x += circle.getSpeed().x * dt;
-	y += circle.getSpeed().y * dt;
 
-	circle.setPosition({x,y});
 }
+
+
+void Physics::addCircle(Circle& c) {
+	circles.push_back(std::make_unique<Circle>(c));
+}
+
+
+void Physics::gravityUpdate(float dt)
+{
+	for (size_t i = 0; i < circles.size(); i++) {
+		if(circles[i]->getGravityIndicate())
+			gravity(*circles[i], dt);
+	}
+}
+
+
+void Physics::gravity(Circle &c, float dt)
+{
+	float vx = c.getVelocity().get().x;
+	float vy = c.getVelocity().get().y;
+
+	vy += m_gravity * dt;
+
+	c.setVelocity({ vx, vy });
+}
+
+
+float Physics::getGravity() {
+	return m_gravity;
+}
+
+void Physics::setGravity(float g) {
+	m_gravity = g;
+}
+

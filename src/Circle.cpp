@@ -1,47 +1,93 @@
-#include "Circle.h"
+#include "../headers/Circle.h"
 
 
-Circle::Circle(float x, float y, float radius, float mass) {
-	m_Center.x = x;
-	m_Center.y = y;
+Circle::Circle(vec2 start_pos, float radius, float mass, float elastic)
+{
+	m_position = start_pos;
+	m_mass = mass;
 	m_circle.setRadius(radius);
 	m_circle.setOrigin(radius, radius);
-	m_circle.setPosition(m_Center);
+	m_circle.setPosition(start_pos.get());
 	m_circle.setFillColor(sf::Color::White);
-	m_mass = mass;
 	m_radius = radius;
-}
-
-sf::CircleShape Circle::getSprite() {
-	return m_circle;
-}
-
-void Circle::setVelocity(sf::Vector2f vel) {
-	m_speed = vel;
+	
+	this->elastic = elastic;
 }
 
 
-void Circle::setPosition(float x, float y) {
-	m_circle.setPosition({ x, y });
+//getters
+
+void Circle::draw(sf::RenderTarget& target) {
+	target.draw(m_circle);
 }
 
 
-void Circle::setPosition(sf::Vector2f pos) {
-	m_Center = pos;
-	m_circle.setPosition(pos);
+vec2 Circle::getPosition() const
+{
+	return m_position;
 }
 
 
-sf::Vector2f Circle::getCenter() { 
-	return m_Center; 
-}
-
-
-float Circle::getRadius() {
+float Circle::getRadius() const
+{
 	return m_radius;
 }
 
 
-sf::Vector2f Circle::getSpeed() {
+vec2 Circle::getVelocity() const
+{
 	return m_speed;
+}
+
+sf::FloatRect Circle::getBounds() const {
+	return m_circle.getGlobalBounds();
+}
+
+
+bool Circle::getGravityIndicate() const
+{
+	return isGravityActive;
+}
+
+bool Circle::getCollisionIndicate() const
+{
+	return isCollisionActive;
+}
+
+float Circle::getMass() {
+	return m_mass;
+}
+
+//setters
+
+void Circle::setVelocity(vec2 velocity) {
+	m_speed = velocity;
+}
+
+
+void Circle::setPosition(vec2 coords) {
+	m_position = coords;
+	m_circle.setPosition(coords.get());
+}
+
+
+void Circle::setElastic(float elast) {
+	elastic = elast;
+}
+
+//physics
+
+void Circle::activateGravity(bool handler) {
+	isGravityActive = handler;
+}
+
+void Circle::activateCollision(bool handler){
+	isCollisionActive = handler;
+}
+
+void Circle::update(float dt)
+{
+
+	m_circle.move(m_speed.get() * dt);
+	m_position = m_circle.getPosition();
 }

@@ -1,12 +1,2 @@
-﻿  Circle.cpp
-  main.cpp
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(16,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(20,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(21,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(22,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(25,12): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(26,12): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  PhysicsEngine.cpp
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(56,13): warning C4305: '*=': truncation from 'double' to 'float'
-  Generating Code...
+﻿  main.cpp
   Physics_SimulationSFML.vcxproj -> C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\x64\Debug\Physics_SimulationSFML.exe

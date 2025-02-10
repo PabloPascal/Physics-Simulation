@@ -29,13 +29,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\PhysicsEngine.h">
+    <ClInclude Include="headers\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Circle.h">
+    <ClInclude Include="headers\Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\vec.h">
+    <ClInclude Include="headers\PhysicsEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\vec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

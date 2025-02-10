@@ -136,9 +136,11 @@
     <ClCompile Include="src\vec.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Circle.h" />
-    <ClInclude Include="src\PhysicsEngine.h" />
-    <ClInclude Include="src\vec.h" />
+    <ClInclude Include="headers\Circle.h" />
+    <ClInclude Include="headers\Object.h" />
+    <ClInclude Include="headers\PhysicsEngine.h" />
+    <ClInclude Include="headers\Rectangle.h" />
+    <ClInclude Include="headers\vec.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
