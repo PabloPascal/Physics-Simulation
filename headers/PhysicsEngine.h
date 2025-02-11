@@ -29,6 +29,8 @@ private:
 
 	float m_gravity; 
 	
+	bool boundaryCollisionHandle = false;
+
 private:
 
 	Physics() = default;
@@ -47,6 +49,8 @@ public:
 
 	void setGravity(float g);
 
+	void boundaryCollisionOn(bool handler);
+
 private:
 	void render();
 
@@ -55,6 +59,9 @@ private:
 	void gravityUpdate(float dt);
 
 	void gravity(Circle& c, float dt);
+
+	void boundaryCollision(Circle& c);
+	
 };
 
 

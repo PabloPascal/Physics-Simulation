@@ -27,6 +27,7 @@ public:
 
 	virtual void setPosition(vec2 coords) = 0;
 
+	virtual void setFillColor(sf::Color) = 0;
 //physics
 
 	virtual void activateGravity(bool handler) = 0;

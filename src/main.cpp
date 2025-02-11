@@ -20,8 +20,11 @@ int main() {
 
 	Physics* engine = Physics::getInstance(1000);
 	
-	Circle c1({ 100,100 }, 50, 150);
-	Circle c2({ 300,200 }, 30, 150);
+	Circle c1({ 100,100 }, 50, 250);
+	Circle c2({ 200,200 }, 30, 30);
+
+	c1.setFillColor(sf::Color(128,128,128));
+	c2.setFillColor(sf::Color::Blue);
 
 	c1.setVelocity({ 100, 40 });
 	c2.setVelocity({ -100, 10 });
@@ -29,10 +32,13 @@ int main() {
 	c1.activateCollision(true);
 	c2.activateCollision(true);
 
-	//c1.activateGravity(true);
+	c1.activateGravity(true);
+	c2.activateGravity(true);
 
 	engine->addCircle(c1);
 	engine->addCircle(c2);
+
+	engine->boundaryCollisionOn(true);
 
 	engine->run();
 

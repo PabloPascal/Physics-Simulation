@@ -91,3 +91,8 @@ void Circle::update(float dt)
 	m_circle.move(m_speed.get() * dt);
 	m_position = m_circle.getPosition();
 }
+
+
+void Circle::setFillColor(sf::Color color) {
+	m_circle.setFillColor(color);
+}

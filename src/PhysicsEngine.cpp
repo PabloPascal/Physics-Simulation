@@ -77,7 +77,6 @@ void crashBalls(Circle& circle1, Circle& circle2) {
 	circle2.setVelocity(v2_new.get());
 }
 
-#include <iostream>
 bool checkBallsCollision(const Circle& c1,const Circle& c2)
 {
 	float r1 = c1.getRadius();
@@ -85,7 +84,6 @@ bool checkBallsCollision(const Circle& c1,const Circle& c2)
 	
 
 	if (length(c1.getPosition() - c2.getPosition()) < r1 + r2) {
-		//std::cout << "intersect! \n";
 		return true;
 	}
 
@@ -93,10 +91,13 @@ bool checkBallsCollision(const Circle& c1,const Circle& c2)
 }
 
 
+void separateBalls(Circle& c1, Circle& c2);
+void separateWalls(Circle& c1, vec2 normal, float diff);
 
+//check all collisions
 void Physics::collision()
 {
-
+	//collisions with each other
 	for (size_t i = 0; i < circles.size(); i++) {
 
 		for (size_t j = i+1; j < circles.size(); j++) {
@@ -105,12 +106,23 @@ void Physics::collision()
 				checkBallsCollision(*circles[i], *circles[j]))
 			{
 				crashBalls(*circles[i], *circles[j]);
+				separateBalls(*circles[i], *circles[j]);
 			}
 
 		}
 
 	}
+	//boundary collisions
 
+	if (boundaryCollisionHandle) {
+
+		for (auto& c : circles) {
+			boundaryCollision(*c);
+			
+		}
+
+
+	}
 
 }
 
@@ -158,5 +170,81 @@ float Physics::getGravity() {
 
 void Physics::setGravity(float g) {
 	m_gravity = g;
+}
+
+
+
+void Physics::boundaryCollision(Circle& c) {
+
+	float r = c.getRadius();
+
+	if (c.getPosition().get().x + r > ScreenWidth ) {
+		float diff = c.getPosition().get().x + r - ScreenWidth;
+
+		separateWalls(c, {-1, 0}, diff);
+		c.setVelocity({ -c.getVelocity().get().x, c.getVelocity().get().y });
+	}
+
+	if (c.getPosition().get().x - r < 0) {
+		float diff = -(c.getPosition().get().x - r);
+
+		separateWalls(c, {1, 0}, diff);
+		c.setVelocity({ -c.getVelocity().get().x, c.getVelocity().get().y });
+	}
+
+	if (c.getPosition().get().y + r > ScreenHeight) {
+		float diff = c.getPosition().get().y + r - ScreenHeight;
+
+		separateWalls(c, {0, -1}, diff);
+		c.setVelocity({ c.getVelocity().get().x, -c.getVelocity().get().y });
+
+	}
+	if (c.getPosition().get().y - r < 0) {
+		float diff = -(c.getPosition().get().y - r);
+
+		separateWalls(c, { 0, 1 }, diff);
+		c.setVelocity({ c.getVelocity().get().x, -c.getVelocity().get().y });
+
+	}
+
+
+}
+
+
+void Physics::boundaryCollisionOn(bool handle) {
+	boundaryCollisionHandle = handle;
+}
+
+
+
+void separateBalls(Circle& c1, Circle& c2) {
+
+	float angle = atan2f(c1.getPosition().get().y - c2.getPosition().get().y, 
+						 c1.getPosition().get().x - c2.getPosition().get().x);
+
+
+	float diffDist = c1.getRadius() + c2.getRadius() - length(c1.getPosition() - c2.getPosition());
+
+	diffDist *= 0.5;
+
+	vec2 dir = { cos(angle), sin(angle) };
+	vec2 delta1 = c1.getPosition() + dir *diffDist;
+	vec2 delta2 = c2.getPosition() + dir * diffDist;
+
+	c1.setPosition(delta1);
+	c2.setPosition(delta2);
+	
+
+}
+
+
+void separateWalls(Circle& c1, vec2 normal, float diff) {
+
+	diff *= 0.5;
+
+	vec2 delta = c1.getPosition() + normal * diff;
+
+	c1.setPosition(delta);
+
 }
 

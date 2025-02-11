@@ -46,6 +46,8 @@ public:
 
 	void setElastic(float elastic_coefficient);
 
+	void setFillColor(sf::Color color) override;
+
 //physics
 
 	void activateGravity(bool handler) override;
