@@ -17,17 +17,23 @@ E = m*v^2 / 2
 
 
 int main() {
+	size_t count;
+	std::cout << "input count of balls" << std::endl;
+	std::cin >> count;
 
 	Physics* engine = Physics::getInstance(1000);
-	
+	/*
 	Circle c1({ 100,100 }, 50, 250);
-	Circle c2({ 200,200 }, 30, 30);
+	Circle c2({ 100,200 }, 30, 30);
 
 	c1.setFillColor(sf::Color(128,128,128));
 	c2.setFillColor(sf::Color::Blue);
 
-	c1.setVelocity({ 100, 40 });
-	c2.setVelocity({ -100, 10 });
+	c1.setElastic(0.9);
+	c2.setElastic(0.9);
+
+	c1.setVelocity({ 150, 40 });
+	c2.setVelocity({ 150, 10 });
 
 	c1.activateCollision(true);
 	c2.activateCollision(true);
@@ -37,9 +43,11 @@ int main() {
 
 	engine->addCircle(c1);
 	engine->addCircle(c2);
+	*/
 
+	engine->generateBalls(count);
+	
 	engine->boundaryCollisionOn(true);
-
 	engine->run();
 
 }

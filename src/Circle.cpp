@@ -85,9 +85,10 @@ void Circle::activateCollision(bool handler){
 	isCollisionActive = handler;
 }
 
+#include <iostream>
 void Circle::update(float dt)
 {
-
+	//std::cout << "Vy = " << m_speed.get().y << std::endl;
 	m_circle.move(m_speed.get() * dt);
 	m_position = m_circle.getPosition();
 }
@@ -95,4 +96,9 @@ void Circle::update(float dt)
 
 void Circle::setFillColor(sf::Color color) {
 	m_circle.setFillColor(color);
+}
+
+
+float Circle::getElastic() {
+	return elastic;
 }

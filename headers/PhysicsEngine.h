@@ -51,6 +51,8 @@ public:
 
 	void boundaryCollisionOn(bool handler);
 
+	void generateBalls(size_t count);
+
 private:
 	void render();
 

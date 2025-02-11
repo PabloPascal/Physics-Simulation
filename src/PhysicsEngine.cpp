@@ -157,7 +157,7 @@ void Physics::gravity(Circle &c, float dt)
 {
 	float vx = c.getVelocity().get().x;
 	float vy = c.getVelocity().get().y;
-
+	
 	vy += m_gravity * dt;
 
 	c.setVelocity({ vx, vy });
@@ -196,7 +196,7 @@ void Physics::boundaryCollision(Circle& c) {
 		float diff = c.getPosition().get().y + r - ScreenHeight;
 
 		separateWalls(c, {0, -1}, diff);
-		c.setVelocity({ c.getVelocity().get().x, -c.getVelocity().get().y });
+		c.setVelocity({c.getVelocity().get().x, -c.getVelocity().get().y * c.getElastic()});
 
 	}
 	if (c.getPosition().get().y - r < 0) {
@@ -222,14 +222,17 @@ void separateBalls(Circle& c1, Circle& c2) {
 	float angle = atan2f(c1.getPosition().get().y - c2.getPosition().get().y, 
 						 c1.getPosition().get().x - c2.getPosition().get().x);
 
+	float r1 = c1.getRadius();
+	float r2 = c2.getRadius();
 
-	float diffDist = c1.getRadius() + c2.getRadius() - length(c1.getPosition() - c2.getPosition());
+	float diffDist = r1 + r2 - length(c1.getPosition() - c2.getPosition());
 
+	//diffDist *= 1.01 / (pow(r1,2) + pow(r2,2));
 	diffDist *= 0.5;
 
 	vec2 dir = { cos(angle), sin(angle) };
 	vec2 delta1 = c1.getPosition() + dir *diffDist;
-	vec2 delta2 = c2.getPosition() + dir * diffDist;
+	vec2 delta2 = c2.getPosition() + dir * diffDist*(-1);
 
 	c1.setPosition(delta1);
 	c2.setPosition(delta2);
@@ -240,7 +243,7 @@ void separateBalls(Circle& c1, Circle& c2) {
 
 void separateWalls(Circle& c1, vec2 normal, float diff) {
 
-	diff *= 0.5;
+	//diff *= 0.5;
 
 	vec2 delta = c1.getPosition() + normal * diff;
 
@@ -248,3 +251,32 @@ void separateWalls(Circle& c1, vec2 normal, float diff) {
 
 }
 
+#include <iostream>
+void Physics::generateBalls(size_t count) {
+	
+	srand(std::time(0));
+
+	for (size_t i = 0; i < count; i++) {
+		float x = (rand() % (ScreenWidth-20)) + 10;
+		float y = (rand() % (ScreenHeight-20)) + 10;
+		
+		float vx = (rand() % 30) + 10;
+		float vy = (rand() % 30) + 10;
+
+		float radius = (rand() % 5) + 10;
+		float mass = (rand() % 10) + 25;
+
+		int color = rand() % 2;
+
+		Circle c({x, y}, radius, mass);
+		
+		c.setVelocity({ vx, vy });
+		c.setFillColor(sf::Color((1 - color) * 255, 0, color * 255));
+		c.activateGravity(true);
+		c.activateCollision(true);
+		c.setElastic(0.9);
+
+		addCircle(c);
+	}
+
+}

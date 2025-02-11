@@ -4,6 +4,7 @@
 #include "../headers/Object.h"
 
 
+
 class Circle: public Object
 {
 
@@ -38,6 +39,7 @@ public:
 	bool getCollisionIndicate() const override;
 
 	float getMass();
+	float getElastic();
 //setters
 
 	void setVelocity(vec2) override;
