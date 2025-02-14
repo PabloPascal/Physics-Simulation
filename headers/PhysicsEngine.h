@@ -51,7 +51,7 @@ public:
 
 	void setGravity(float g);
 
-	void boundaryCollisionOn(bool handler);
+	void boundaryCollisionTurn(bool handler);
 
 	void generateBalls(size_t count);
 
@@ -63,8 +63,6 @@ private:
 	void gravityUpdate(float dt);
 
 	void gravity(Circle& c, float dt);
-
-	void boundaryCollision(Circle& c);
 	
 };
 

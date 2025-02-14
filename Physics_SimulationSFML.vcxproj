@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\calculate_collisions.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="src\vec.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\calculate_collisions.h" />
     <ClInclude Include="headers\Circle.h" />
     <ClInclude Include="headers\Object.h" />
     <ClInclude Include="headers\PhysicsEngine.h" />

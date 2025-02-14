@@ -1,10 +1,5 @@
 /*
-программа моделирует столкновения шаров в вакууме, имитация свободного падения и удары об стенки
-используется закон сохранения энергии и импульса 
-E1 + E2 = E1' + E2'
-p1 + p2 = p1' + p2'
-p = m*v
-E = m*v^2 / 2
+	programm's modeling physics of balls collision, free fall  
 */
 
 
@@ -59,9 +54,9 @@ int main() {
 	//engine->addRect(r3);
 
 
-	//engine->generateBalls(100);
+	engine->generateBalls(100);
 	
-	engine->boundaryCollisionOn(true);
+	engine->boundaryCollisionTurn(true);
 	engine->run();
 
 }
