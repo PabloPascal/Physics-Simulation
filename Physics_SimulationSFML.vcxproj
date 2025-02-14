@@ -133,6 +133,7 @@
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
+    <ClCompile Include="src\Rectangle.cpp" />
     <ClCompile Include="src\vec.cpp" />
   </ItemGroup>
   <ItemGroup>

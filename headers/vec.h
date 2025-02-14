@@ -18,10 +18,13 @@ public:
 	vec2 operator-(vec2 v);
 	vec2 operator/(float scalar);
 	vec2 operator*(float scalar);
+	vec2 operator*(vec2 v);
 
 	vec2& operator=(vec2 v);
 
 	const sf::Vector2f get() const;
+	float getX() const;
+	float getY() const;
 
 };
 

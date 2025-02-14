@@ -20,7 +20,7 @@ vec2 vec2::operator+(vec2 v) { return vec2(vector + v.vector); }
 vec2 vec2::operator-(vec2 v) { return vec2(vector - v.vector); }
 vec2 vec2::operator/(float scalar) { return vec2(vector.x / scalar, vector.y / scalar); }
 vec2 vec2::operator*(float scalar) { return vec2(scalar * vector.x, scalar * vector.y); }
-
+vec2 vec2::operator*(vec2 v) { return vec2(vector.x * v.getX(), vector.y * v.getY()); }
 
 vec2& vec2::operator=(vec2 v) {
 	vector = v.vector;
@@ -33,6 +33,13 @@ const sf::Vector2f vec2::get() const
 	return vector;
 }
 
+float vec2::getX() const {
+	return vector.x;
+}
+
+float vec2::getY() const{
+	return vector.y;
+}
 
 
 float dotProd(vec2 v1, vec2 v2) {

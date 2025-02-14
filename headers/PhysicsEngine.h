@@ -7,7 +7,7 @@
 #include "vec.h"
 #include "Object.h"
 #include "Circle.h"
-
+#include "Rectangle.h"
 
 //void ObjCollision(Circle& circle1, Circle& circle2);
 
@@ -23,7 +23,8 @@ private:
 	sf::RenderWindow m_window;
 
 	std::vector<std::unique_ptr<Circle>> circles;
-	
+	std::vector<std::unique_ptr<Rectangle>> rects;
+
 
 //physics parametrs of this universe
 
@@ -44,6 +45,7 @@ public:
 	void run();
 
 	void addCircle(Circle& c);
+	void addRect(Rectangle& r);
 
 	float getGravity();
 

@@ -24,8 +24,10 @@ public:
 	
 	Circle(vec2 start_pos, float radius, float mass, float elastic = 0);
 
-//getters
-	void draw(sf::RenderTarget& target);
+	void draw(sf::RenderTarget& target) override;
+
+public: //getters
+
 
 	vec2 getVelocity() const override;
 
@@ -40,7 +42,7 @@ public:
 
 	float getMass();
 	float getElastic();
-//setters
+public: //setters
 
 	void setVelocity(vec2) override;
 
@@ -50,7 +52,7 @@ public:
 
 	void setFillColor(sf::Color color) override;
 
-//physics
+public: //physics
 
 	void activateGravity(bool handler) override;
 
