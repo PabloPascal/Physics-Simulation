@@ -232,8 +232,8 @@ void crashBalls(Circle& circle1, Circle& circle2) {
 	vec2 v1_new = v1 - (x1 - x2) * (2 * m2 / (m1 + m2) * dotProd(v1 - v2, x1 - x2) / (length(x1 - x2) * length(x1 - x2)));
 	vec2 v2_new = v2 - (x2 - x1) * (2 * m1 / (m1 + m2) * dotProd(v2 - v1, x2 - x1) / (length(x2 - x1) * length(x2 - x1)));
 
-	circle1.setVelocity(v1_new.get());
-	circle2.setVelocity(v2_new.get());
+	circle1.setVelocity(circle1.getElastic() * v1_new.get());
+	circle2.setVelocity(circle2.getElastic() * v2_new.get());
 }
 
 

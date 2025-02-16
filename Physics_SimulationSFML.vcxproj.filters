@@ -33,6 +33,9 @@
     <ClCompile Include="src\calculate_collisions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\calculate_Force.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Object.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\calculate_collisions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\calculate_Force.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

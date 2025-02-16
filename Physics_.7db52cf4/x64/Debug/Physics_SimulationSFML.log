@@ -1,14 +1,5 @@
-﻿  PhysicsEngine.cpp
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(156,17): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(159,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(160,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(162,12): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(163,12): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(165,16): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(166,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\PhysicsEngine.cpp(176,16): warning C4305: 'argument': truncation from 'double' to 'float'
-  calculate_collisions.cpp
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\calculate_collisions.cpp(59,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\calculate_collisions.cpp(68,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
+﻿  main.cpp
+C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(32,16): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(33,16): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(34,16): warning C4305: 'argument': truncation from 'double' to 'float'
   Physics_SimulationSFML.vcxproj -> C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\x64\Debug\Physics_SimulationSFML.exe

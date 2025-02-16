@@ -1,7 +1,13 @@
 #include "../headers/PhysicsEngine.h"
 #include "../headers/calculate_collisions.h"
+#include "../headers/calculate_Force.h"
+
 
 #include <iostream>
+
+void controlView(sf::View& view);
+
+
 
 Physics* Physics::instance_engine = nullptr;
 
@@ -21,47 +27,84 @@ Physics* Physics::getInstance(float gravity) {
 
 void Physics::run() {
 
+	sf::View view(sf::FloatRect(0,0, ScreenWidth, ScreenHeight));
+	view.setCenter(ScreenWidth / 2, ScreenHeight / 2);
 
 	sf::Clock clock;
 
 
-	while (m_window.isOpen()) {
+	while (m_window.isOpen()) {//main cycle
 
 		sf::Time time = clock.restart();
 		float dt = time.asSeconds();
 
 
 		sf::Event event;
-		while (m_window.pollEvent(event)) { //main cycle
+		while (m_window.pollEvent(event)) { 
 
 			if (event.type == sf::Event::Closed) {
 				m_window.close();
-				}
 			}
-			//phsycis
-
-			collision();
 			
-			gravityUpdate(dt);
+			//control
+			controlView(view);
+		}
+		
+		
+		
+		//phsycis
 
-			for (size_t i = 0; i < circles.size(); i++) {
-				circles[i]->update(dt);
-			}
+		collision();
+		
+		gravityUpdate(dt);
 
-			//std::cout << "c.y = " << circles[0]->getPosition().getY() << std::endl;
+		for (size_t i = 0; i < circles.size(); i++) {
+			circles[i]->update(dt);
+		}
 
-			//draw
+		ForceUpdate();
 
-			m_window.clear();
+		//draw
 
-			render();
+		m_window.clear();
 
-			m_window.display();
+		render();
+
+		m_window.setView(view);
+		m_window.display();
 		
 
 	}
 
 }
+
+
+void controlView(sf::View& view) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+		view.zoom(1.01);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		view.zoom(0.99);
+		//view.setCenter(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		view.move(0, -10);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		view.move(0, 10);
+		//view.setCenter(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		view.move(-10, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		view.move(10,0);
+		//view.setCenter(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)));
+	}
+
+
+}
+
 
 
 /*
@@ -121,7 +164,9 @@ void Physics::boundaryCollisionTurn(bool handle) {
 	boundaryCollisionHandle = handle;
 }
 
-
+/*
+							RENDER
+*/
 
 void Physics::render() {
 
@@ -171,7 +216,8 @@ void Physics::generateBalls(size_t count) {
 
 		c.setVelocity({ vx, vy });
 		c.setFillColor(sf::Color((1 - color) * 255, 0, color * 255));
-		c.activateGravity(true);
+		//c.activateGravity(true);
+		c.activateGravityForce(true);
 		c.activateCollision(true);
 		c.setElastic(0.9);
 
@@ -216,3 +262,17 @@ void Physics::setGravity(float g) {
 
 
 
+void Physics::ForceUpdate() {
+
+	for (size_t i = 0; i < circles.size(); i++) {
+
+		for (size_t j = i + 1; j < circles.size(); j++) {
+			if (circles[i]->getGravityForceIndicate() && circles[j]->getGravityForceIndicate())
+			{
+				calcGravityForce(*circles[i], *circles[j]);
+			}
+		}
+
+	}
+
+}

@@ -58,6 +58,10 @@ float Circle::getMass() {
 	return m_mass;
 }
 
+bool Circle::getGravityForceIndicate() {
+	return isGravityForceActive;
+}
+
 //setters
 
 void Circle::setVelocity(vec2 velocity) {
@@ -101,4 +105,9 @@ void Circle::setFillColor(sf::Color color) {
 
 float Circle::getElastic() {
 	return elastic;
+}
+
+
+void Circle::activateGravityForce(bool handler) {
+	isGravityForceActive = handler;
 }

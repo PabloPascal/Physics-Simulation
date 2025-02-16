@@ -19,7 +19,7 @@ class Circle: public Object
 
 	bool isGravityActive = false; 
 	bool isCollisionActive = false;
-
+	bool isGravityForceActive = false;
 public:
 	
 	Circle(vec2 start_pos, float radius, float mass, float elastic = 0);
@@ -39,6 +39,7 @@ public: //getters
 
 	bool getGravityIndicate() const override;
 	bool getCollisionIndicate() const override;
+	bool getGravityForceIndicate();
 
 	float getMass();
 	float getElastic();
@@ -57,6 +58,8 @@ public: //physics
 	void activateGravity(bool handler) override;
 
 	void activateCollision(bool handler) override;
+
+	void activateGravityForce(bool handler);
 
 	void update(float dt) override;
 

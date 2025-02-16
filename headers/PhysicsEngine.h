@@ -64,6 +64,7 @@ private:
 
 	void gravity(Circle& c, float dt);
 	
+	void ForceUpdate();
 };
 
 
