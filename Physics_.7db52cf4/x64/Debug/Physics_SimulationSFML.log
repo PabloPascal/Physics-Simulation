@@ -1,5 +1,0 @@
-﻿  main.cpp
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(32,16): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(33,16): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\src\main.cpp(34,16): warning C4305: 'argument': truncation from 'double' to 'float'
-  Physics_SimulationSFML.vcxproj -> C:\Users\zycov\Desktop\projects\С++_pr\Physics_SimulationSFML\x64\Debug\Physics_SimulationSFML.exe
