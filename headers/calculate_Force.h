@@ -2,7 +2,7 @@
 #define CALCULATE_FOCE_H
 
 #include "Circle.h"
-#include "vec.h"
+
 
 void calcGravityForce(Circle& c1, Circle& c2);
 

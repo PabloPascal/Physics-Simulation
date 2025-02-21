@@ -9,69 +9,122 @@
 
 
 #include <iostream>
-
+#include "../headers/calculate_collisions.h"
 
 #include "../headers/PhysicsEngine.h"
 
 
-
+void control(Circle& c, float t);
 
 int main() {
-
+	
+	
 	Physics* engine = Physics::getInstance(1000);
 
+	Circle c1({ 100,100 }, 40, 50, 0.9);
+	Circle c2({ 200,200 }, 20, 10, 0.9);
+	Circle c3({ 500,300 }, 30, 40, 0.9);
 	
-	Circle c1({ 650,100 }, 5, 50);
-	Circle c2({ 100,200 }, 4, 30);
-	Circle c3({ 1050, 500 }, 6, 200);
-
-	c1.setFillColor(sf::Color(250, 0, 0));
-	c2.setFillColor(sf::Color::Blue);
-	c3.setFillColor(sf::Color::Yellow);
-
-	c1.setElastic(0.1);
-	c2.setElastic(0.1);
-	c3.setElastic(0.1);
-
-	c1.setVelocity({ -15, 40 });
-	c2.setVelocity({ 15, 10 });
-	c3.setVelocity({ 20, 5 });
+	engine->boundaryCollisionTurn(true);
+	
+	c1.setVelocity({ 100, 40 });
+	c2.setVelocity({ 200,300 });
+	c3.setVelocity({ 150,0 });
 
 	c1.activateCollision(true);
 	c2.activateCollision(true);
 	c3.activateCollision(true);
 
-	//c1.activateGravity(true);
-	//c2.activateGravity(true);
+	//engine->generateBalls(10);
+	Rectangle r1({ 700,300 }, { 200,200 }, 100);
+	Rectangle r2({ 200,300 }, { 200,100 }, 100);
+	r1.rotate(3.1415 / 3);
 
-	c1.activateGravityForce(true);
-	c2.activateGravityForce(true);
-	c3.activateGravityForce(true);
+	r1.activateCollision(true);
+	r2.activateCollision(true);
+	
+	engine->addRect(r1);
+	engine->addRect(r2);
 
 	engine->addCircle(c1);
 	engine->addCircle(c2);
 	engine->addCircle(c3);
-	
 
-	//Rectangle r1({ 500, 600 }, { 100, 500 }, 200);
-	//Rectangle r2({ 300, 400 }, { 100, 200 }, 200);
-	//Rectangle r3({ 1000, 500 }, { 100, 100 }, 200);
-	//r1.setFillColor(sf::Color(128, 128, 128));
-	//r1.activateCollision(true);
-	//r2.setFillColor(sf::Color(128, 128, 128));
-	//r2.activateCollision(true);
-	//r3.setFillColor(sf::Color(128, 128, 128));
-	//r3.activateCollision(true);
-	
-	//engine->addRect(r1);
-	//engine->addRect(r2);
-	//engine->addRect(r3);
-
-	//engine->generateBalls(100);
-	
-	//engine->boundaryCollisionTurn(true);
 	engine->run();
+	
 
+	/*
+	Rectangle r1({ 700,300 }, { 200,200 }, 100);
+	//r1.rotate(3.1415 / 3);
+
+	Circle c({ 200, 200 }, 20, 200);
+	c.setVelocity({ 150, 150 });
+
+
+	sf::RenderWindow window(sf::VideoMode(1080, 720), "test");
+
+	std::cout << r1.getLocalCoordsX().getX() << ", ";
+	std::cout << r1.getLocalCoordsX().getY() << std::endl;
+
+	sf::Clock clock;
+	float t = 0;
+
+	vec2 n;
+
+	while (window.isOpen()) {
+
+		sf::Time time = clock.restart();
+		float dt = time.asSeconds();
+		t += dt;
+
+		sf::Event event;
+		while (window.pollEvent(event)) {
+
+			if (event.type == sf::Event::Closed) {
+				window.close();
+			}
+
+
+		}
+		//r1.rotate(3.1415 / 3 * t);
+
+		control(c, dt);
+		
+		if (checkRectBallCollision2(c, r1, n)) {
+			std::cout << "n_x = " << n.getX() << ", n_y = " << n.getY() << std::endl;
+		}
+		
+
+
+
+		window.clear();
+		c.draw(window);
+		r1.draw(window);
+		window.display();
+	}
+	*/
+	
 }
 
+
+void control(Circle& c, float t) {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		c.setPosition(c.getPosition() + vec2(0, -c.getVelocity().getY()* t));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		c.setPosition(c.getPosition() + vec2(0, c.getVelocity().getY() * t));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		c.setPosition(c.getPosition() + vec2(-c.getVelocity().getX() * t, 0));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		c.setPosition(c.getPosition() + vec2(c.getVelocity().getX() * t, 0));
+	}
+
+
+}
 

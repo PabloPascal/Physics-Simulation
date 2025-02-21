@@ -4,12 +4,9 @@
 #include <vector>
 #include <memory>
 
-#include "vec.h"
-#include "Object.h"
 #include "Circle.h"
 #include "Rectangle.h"
 
-//void ObjCollision(Circle& circle1, Circle& circle2);
 
 const int ScreenWidth = 1240;
 const int ScreenHeight = 720;
@@ -24,7 +21,6 @@ private:
 
 	std::vector<std::unique_ptr<Circle>> circles;
 	std::vector<std::unique_ptr<Rectangle>> rects;
-
 
 //physics parametrs of this universe
 

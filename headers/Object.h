@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../headers/vec.h"
+#include "math.h"
 
 
 class Object {

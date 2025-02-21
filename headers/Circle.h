@@ -43,6 +43,8 @@ public: //getters
 
 	float getMass();
 	float getElastic();
+
+
 public: //setters
 
 	void setVelocity(vec2) override;

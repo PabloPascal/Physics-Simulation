@@ -13,14 +13,19 @@ private:
 	vec2 m_position;
 	vec2 m_size;
 	vec2 m_velosity;
+	float m_angle = 0;
 
 	float m_mass;
 
 	bool m_gravityHandle = false;
 	bool m_collisionHandle = false;
+
+	vec2 m_localCoordsX;
+	vec2 m_localCoordsY;
+
 public:
 
-	Rectangle(vec2 start_pos, vec2 size, float mass);
+	Rectangle(vec2 start_pos, vec2 size, float mass = 0);
 
 	void draw(sf::RenderTarget& target) override;
 
@@ -35,6 +40,11 @@ public: //getters
 
 	bool getGravityIndicate() const;
 	bool getCollisionIndicate() const;
+
+	float getAngle();
+
+	vec2 getLocalCoordsX();
+	vec2 getLocalCoordsY();
 
 public: //setters
 
@@ -52,6 +62,7 @@ public://physics
 
 	void update(float dt);
 
+	void rotate(float angle);
 };
 
 

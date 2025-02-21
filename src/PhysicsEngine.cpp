@@ -2,11 +2,10 @@
 #include "../headers/calculate_collisions.h"
 #include "../headers/calculate_Force.h"
 
-
 #include <iostream>
 
-void controlView(sf::View& view);
 
+void controlView(sf::View& view, float dt);
 
 
 Physics* Physics::instance_engine = nullptr;
@@ -32,7 +31,6 @@ void Physics::run() {
 
 	sf::Clock clock;
 
-
 	while (m_window.isOpen()) {//main cycle
 
 		sf::Time time = clock.restart();
@@ -47,11 +45,9 @@ void Physics::run() {
 			}
 			
 			//control
-			controlView(view);
+			controlView(view, dt);
 		}
-		
-		
-		
+				
 		//phsycis
 
 		collision();
@@ -79,26 +75,26 @@ void Physics::run() {
 }
 
 
-void controlView(sf::View& view) {
+void controlView(sf::View& view, float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-		view.zoom(1.01);
+		view.zoom(1 + 5*dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		view.zoom(0.99);
+		view.zoom(1-5*dt);
 		//view.setCenter(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		view.move(0, -10);
+		view.move(0, -20000*dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		view.move(0, 10);
+		view.move(0, 20000 *dt);
 		//view.setCenter(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		view.move(-10, 0);
+		view.move(-20000*dt, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		view.move(10,0);
+		view.move(20000*dt,0);
 		//view.setCenter(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)));
 	}
 
@@ -122,7 +118,7 @@ void Physics::collision()
 			if (circles[i]->getCollisionIndicate() && circles[j]->getCollisionIndicate() && 
 				checkBallsCollision(*circles[i], *circles[j]))
 			{
-				crashBalls(*circles[i], *circles[j]);
+				hitBalls(*circles[i], *circles[j]);
 				separateBalls(*circles[i], *circles[j]);
 			}
 
@@ -178,6 +174,7 @@ void Physics::render() {
 	for (size_t i = 0; i < rects.size(); i++) {
 		rects[i]->draw(m_window);
 	}
+	
 
 }
 
@@ -218,14 +215,13 @@ void Physics::generateBalls(size_t count) {
 		c.setFillColor(sf::Color((1 - color) * 255, 0, color * 255));
 		//c.activateGravity(true);
 		c.activateGravityForce(true);
-		c.activateCollision(true);
-		c.setElastic(0.9);
+		//c.activateCollision(true);
+		//c.setElastic(0.9);
 
 		addCircle(c);
 	}
 
 }
-
 
 
 /*

@@ -1,6 +1,7 @@
 #include "../headers/Rectangle.h"
 
 
+
 Rectangle::Rectangle(vec2 start_pos, vec2 size, float mass)
 {
 	m_position = start_pos;
@@ -11,6 +12,8 @@ Rectangle::Rectangle(vec2 start_pos, vec2 size, float mass)
 	m_rect.setSize(m_size.get());
 	m_rect.setOrigin((m_size * 0.5).get());
 	
+	m_localCoordsX = { 1,0 };
+	m_localCoordsY = { 0,1 };
 }
 
 
@@ -47,6 +50,20 @@ bool Rectangle::getCollisionIndicate() const {
 vec2 Rectangle::getSize() const {
 	return m_size;
 }
+
+
+float Rectangle::getAngle() {
+	return m_angle;
+}
+
+vec2 Rectangle::getLocalCoordsX() {
+	return m_localCoordsX;
+}
+
+vec2 Rectangle::getLocalCoordsY() {
+	return m_localCoordsY;
+}
+
 
 /*
 				SETTERS
@@ -85,4 +102,15 @@ void Rectangle::activateCollision(bool handler){
 
 void Rectangle::update(float dt) {
 	m_rect.move(m_velosity.get() * dt);
+}
+
+
+void Rectangle::rotate(float angle) {
+
+	m_angle = angle;
+	
+	m_localCoordsX = Math::Rotate(angle) * m_localCoordsX;
+	m_localCoordsY = Math::Rotate(angle) * m_localCoordsY;
+
+	m_rect.setRotation(360 * angle / (2*Math::PI));
 }

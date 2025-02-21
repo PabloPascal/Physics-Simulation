@@ -1,5 +1,7 @@
 #include "../headers/calculate_collisions.h"
 
+#include <iostream>
+
 
 bool checkRectCollision(Rectangle& rect1, Rectangle& rect2) {
 
@@ -7,178 +9,6 @@ bool checkRectCollision(Rectangle& rect1, Rectangle& rect2) {
 
 }
 
-
-
-void CircleHitRect(Circle& c, Rectangle& rect)
-{
-
-	float r = c.getRadius();
-	float h = rect.getSize().getY();
-	float w = rect.getSize().getX();
-
-
-	if (checkRectBallCollision(c, rect))
-	{
-		if (c.getPosition().getX() > rect.getPosition().getX() - w / 2
-			&& c.getPosition().getX() < rect.getPosition().getX() + w / 2)
-		{
-			if (rect.getPosition().getY() > c.getPosition().getY()) {
-
-				vec2 normal = { 0, -1 };
-
-				c.setVelocity({ c.getVelocity().getX(), -c.getVelocity().getY() });
-
-				float diff = abs(abs(c.getPosition().getY() - rect.getPosition().getY()) - h / 2);
-
-				separateWalls(c, normal, diff);
-			}
-			else {
-				vec2 normal = { 0, 1 };
-
-				c.setVelocity({ c.getVelocity().getX(), -c.getVelocity().getY() });
-
-				float diff = abs(abs(c.getPosition().getY() - rect.getPosition().getY()) - h / 2);
-
-				separateWalls(c, normal, diff);
-			}
-
-
-		}//if x_c in diaposon (x_r - w/2, x_r + w/2)
-
-		else if (c.getPosition().getY() > rect.getPosition().getY() - h / 2
-			&& c.getPosition().getY() < rect.getPosition().getY() + h / 2)
-		{
-			if (rect.getPosition().getX() > c.getPosition().getX()) {
-
-				vec2 normal = { -1, 0 };
-
-				c.setVelocity({ -c.getVelocity().getX(), c.getVelocity().getY() });
-
-				float diff = abs(abs(c.getPosition().getX() - rect.getPosition().getX()) - w / 2);
-
-				separateWalls(c, normal, 0.1 * diff);
-			}
-			else {
-				vec2 normal = { 1, 0 };
-
-				c.setVelocity({ -c.getVelocity().getX(), c.getVelocity().getY() });
-
-				float diff = abs(abs(c.getPosition().getX() - rect.getPosition().getX()) - w / 2);
-
-				separateWalls(c, normal, 0.1 * diff);
-			}
-
-
-		}//if y_c in diaposon (y_r - h/2, y_r + h/2)
-
-		else {
-			//left top
-			if (c.getPosition().getX() < rect.getPosition().getX() &&
-				c.getPosition().getY() < rect.getPosition().getY())
-			{
-				vec2 P = { rect.getPosition().getX() - w / 2, rect.getPosition().getY() - h / 2 };
-				vec2 normal = c.getPosition() - P;
-				normal = normal / length(normal);
-
-				c.setVelocity(c.getVelocity() * c.getElastic() * (-1));
-				float diff = abs(length(c.getPosition() - P) - r);
-
-				separateWalls(c, normal, diff);
-
-			}
-			//right top
-			else if (c.getPosition().getX() > rect.getPosition().getX() &&
-				c.getPosition().getY() < rect.getPosition().getY())
-			{
-				vec2 P = { rect.getPosition().getX() + w / 2, rect.getPosition().getY() - h / 2 };
-				vec2 normal = c.getPosition() - P;
-				normal = normal / length(normal);
-
-				c.setVelocity(c.getVelocity() * c.getElastic() * (-1));
-				float diff = abs(length(c.getPosition() - P) - r);
-
-				separateWalls(c, normal, diff);
-
-			}
-			//left bottom
-			else if (c.getPosition().getX() < rect.getPosition().getX() &&
-				c.getPosition().getY() > rect.getPosition().getY())
-			{
-				vec2 P = { rect.getPosition().getX() - w / 2, rect.getPosition().getY() + h / 2 };
-				vec2 normal = c.getPosition() - P;
-				normal = normal / length(normal);
-
-				c.setVelocity(c.getVelocity() * c.getElastic() * (-1));
-				float diff = abs(length(c.getPosition() - P) - r);
-
-				separateWalls(c, normal, diff);
-
-			}
-			//right bottom
-			else if (c.getPosition().getX() > rect.getPosition().getX() &&
-				c.getPosition().getY() > rect.getPosition().getY())
-			{
-				vec2 P = { rect.getPosition().getX() + w / 2, rect.getPosition().getY() + h / 2 };
-				vec2 normal = c.getPosition() - P;
-				normal = normal / length(normal);
-
-				c.setVelocity(c.getVelocity() * c.getElastic() * (-1));
-				float diff = abs(length(c.getPosition() - P) - r);
-
-				separateWalls(c, normal, diff);
-
-			}
-
-		}
-
-	}//check ball collision with rect
-
-}
-
-
-
-
-bool checkRectBallCollision(Circle& c, Rectangle& rect)
-{
-	float r = c.getRadius();
-	float h = rect.getSize().getY();
-	float w = rect.getSize().getX();
-
-	if (abs(c.getPosition().getY() - rect.getPosition().getY()) < r + h / 2
-		&& c.getPosition().getX() > rect.getPosition().getX() - w / 2 &&
-		c.getPosition().getX() < rect.getPosition().getX() + w / 2)
-	{
-		return true;
-	}
-	else if (abs(c.getPosition().getX() - rect.getPosition().getX()) < r + w / 2
-		&& c.getPosition().getY() > rect.getPosition().getY() - h / 2 &&
-		c.getPosition().getY() < rect.getPosition().getY() + h / 2)
-	{
-		return true;
-	}
-	else {
-		vec2 leftTop = { rect.getPosition().getX() - w / 2, rect.getPosition().getY() - h / 2 };
-		vec2 rightTop = { rect.getPosition().getX() + w / 2, rect.getPosition().getY() - h / 2 };
-		vec2 leftBottom = { rect.getPosition().getX() - w / 2, rect.getPosition().getY() + h / 2 };
-		vec2 rightBottom = { rect.getPosition().getX() + w / 2, rect.getPosition().getY() + h / 2 };
-
-		float len1 = length(c.getPosition() - leftTop);
-		float len2 = length(c.getPosition() - rightTop);
-		float len3 = length(c.getPosition() - leftBottom);
-		float len4 = length(c.getPosition() - rightBottom);
-
-		float min_dist = std::min({ len1, len2, len3, len4 });
-
-		if (min_dist < r) {
-			return true;
-		}
-
-	}
-
-
-
-	return false;
-}
 
 
 void separateWalls(Circle& c1, vec2 normal, float diff) {
@@ -190,7 +20,6 @@ void separateWalls(Circle& c1, vec2 normal, float diff) {
 	c1.setPosition(delta);
 
 }
-
 
 
 void separateBalls(Circle& c1, Circle& c2) {
@@ -219,7 +48,7 @@ void separateBalls(Circle& c1, Circle& c2) {
 
 
 
-void crashBalls(Circle& circle1, Circle& circle2) {
+void hitBalls(Circle& circle1, Circle& circle2) {
 	vec2 x1 = circle1.getPosition();
 	vec2 x2 = circle2.getPosition();
 
@@ -287,5 +116,87 @@ void boundaryCollision(Circle& c) {
 
 	}
 
+
+}
+
+
+bool checkRectBallCollision(Circle& c, Rectangle& rect, vec2& normal) {
+	
+	vec2 e1 = rect.getLocalCoordsX();
+	vec2 e2 = rect.getLocalCoordsY();
+
+	float w = rect.getSize().getX();
+	float h = rect.getSize().getY();
+	float r = c.getRadius();
+
+	float pr_x = dotProd(c.getPosition(), e1);
+	float pr_y = dotProd(c.getPosition(), e2);
+	
+	float pr_Rx = dotProd(rect.getPosition(), e1);
+	float pr_Ry = dotProd(rect.getPosition(), e2);
+
+
+	if (abs(pr_Rx - pr_x) < w/2 + r && abs(pr_Ry - pr_y) < h/2 + r) {
+		
+		vec2 A = rect.getPosition() + e1 * (w / 2) + e2 * (h / 2);
+		vec2 B = rect.getPosition() + e1 * (w / 2) + e2 * (-h / 2);
+		vec2 C = rect.getPosition() + e1 * (-w / 2) + e2 * (-h / 2);
+		vec2 D = rect.getPosition() + e1 * (-w / 2) + e2 * (h / 2);
+
+
+		float prAx = dotProd(A, e1);
+		float prDx = dotProd(D, e1);
+		float prCy = dotProd(C, e2);
+		float prDy = dotProd(D, e2);
+
+		if (prDx < pr_x && prAx > pr_x) {
+			if (pr_y < prDy) {
+				normal = e2 * (-1);
+			}
+
+			if (pr_y > prCy) {
+				normal = e2;
+			}
+		
+		}
+		if (pr_y < prDy && pr_y > prCy) {
+
+			if (pr_x < prDx) {
+				normal = e1 * (-1);
+			}
+
+			if (pr_x > prAx) {
+				normal = e1;
+			}
+		}
+		
+		return true;
+	}
+
+	return false;
+}
+
+
+void CircleHitRect(Circle& c, Rectangle& rect)
+{
+	vec2 normal;
+	float diff;
+
+	if (checkRectBallCollision(c, rect, normal)) {
+		vec2 newV;
+
+		if (length(normal)) {
+			vec2 v = c.getVelocity();
+			newV = v + normal * 2 * dotProd(v * (-1), normal);
+		}
+
+		else {
+			newV = c.getVelocity()*(-1);
+		}
+
+		c.setVelocity(newV);
+	}
+
+	
 
 }
