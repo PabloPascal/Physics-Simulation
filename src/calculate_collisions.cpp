@@ -1,5 +1,5 @@
 #include "../headers/calculate_collisions.h"
-
+#include <cmath>
 #include <iostream>
 
 
@@ -24,7 +24,7 @@ void separateWalls(Circle& c1, vec2 normal, float diff) {
 
 void separateBalls(Circle& c1, Circle& c2) {
 
-	float angle = atan2f(c1.getPosition().get().y - c2.getPosition().get().y,
+	float angle = std::atan2(c1.getPosition().get().y - c2.getPosition().get().y,
 		c1.getPosition().get().x - c2.getPosition().get().x);
 
 	float r1 = c1.getRadius();
@@ -35,7 +35,7 @@ void separateBalls(Circle& c1, Circle& c2) {
 	//diffDist *= 1.01 / (pow(r1,2) + pow(r2,2));
 	diffDist *= 0.5;
 
-	vec2 dir = { cos(angle), sin(angle) };
+	vec2 dir = { std::cos(angle), std::sin(angle) };
 	vec2 delta1 = c1.getPosition() + dir * diffDist;
 	vec2 delta2 = c2.getPosition() + dir * diffDist * (-1);
 

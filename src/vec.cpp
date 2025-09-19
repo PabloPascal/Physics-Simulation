@@ -1,4 +1,6 @@
 #include "../headers/vec.h"
+#include <cmath>
+
 
 vec2::vec2() {
 	vector.x = 0;
@@ -47,4 +49,4 @@ float dotProd(vec2 v1, vec2 v2) {
 }
 
 
-float length(const vec2& vector) { return sqrt(vector.get().x * vector.get().x + vector.get().y * vector.get().y); }
+float length(const vec2& vector) { return std::sqrt(vector.get().x * vector.get().x + vector.get().y * vector.get().y); }

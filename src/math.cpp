@@ -1,7 +1,7 @@
 #include "../headers/math.h"
 
 #include <iostream>
-
+#include <cmath>
 
 namespace Math {
 
@@ -10,8 +10,8 @@ namespace Math {
 
 	Matrix2D Rotate(float angle) {
 		return Matrix2D(
-			cos(angle), -sin(angle),
-			sin(angle), cos(angle)
+			std::cos(angle), -std::sin(angle),
+			std::sin(angle), std::cos(angle)
 		);
 	}
 
