@@ -4,7 +4,7 @@ project(PhysicsEngine VERSION 0.1.0 LANGUAGES C CXX)
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
 
 add_executable(PhysicsEngine 
-main.cpp
+src/main.cpp
 
 src/math.cpp
 src/matrix.cpp
@@ -27,13 +27,14 @@ headers/Rectangle.h
 headers/vec.h
 headers/Object.h
 
-test/test.cpp
+tests/test.cpp
 )
 
 
 include_directories(
 headers 
 src 
+tests
 )
 
 
